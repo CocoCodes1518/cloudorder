@@ -5,5 +5,11 @@
   "assets": {
     "directory": "../demo",
     "binding": "ASSETS"
-  }
+  },
+  "kv_namespaces": [
+    {
+      "binding": "ORDERS",
+      "id": "cloudorder-orders"
+    }
+  ]
 }
