@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CloudOrder | Operations Console</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="config.js"></script>
+  </head>
+  <body>
+    <aside>
+      <div class="brand"><span>☁</span> CloudOrder</div>
+      <p class="environment">● Production simulation</p>
+      <nav><a class="active" href="#overview">Overview</a><a href="#orders">Orders</a><a href="#architecture">Architecture</a></nav>
+      <div class="side-note">Event-driven operations<br /><small>AWS serverless portfolio demo</small></div>
+    </aside>
+    <main>
+      <header>
+        <div><p class="eyebrow">OPERATIONS CONSOLE</p><h1 id="overview">Order processing, without the wait.</h1><p class="subtitle">A live browser simulation of the CloudOrder serverless workflow.</p></div>
+        <button id="new-order" class="primary">+ Create test order</button>
+      </header>
+      <section class="metrics" aria-label="Platform metrics">
+        <article><span>Orders processed</span><strong id="processed-count">0</strong><small>All time</small></article>
+        <article><span>Queue depth</span><strong id="queue-count">0</strong><small id="queue-state">Healthy</small></article>
+        <article><span>Success rate</span><strong>99.9%</strong><small>Last 24 hours</small></article>
+        <article><span>DLQ messages</span><strong id="dlq-count">0</strong><small>Needs attention</small></article>
+      </section>
+      <section class="workspace" id="orders">
+        <div class="panel form-panel"><div class="section-title"><div><p class="eyebrow">API GATEWAY</p><h2>Submit an order</h2></div><span class="badge">POST /orders</span></div>
+          <form id="order-form">
+            <label>Customer ID<input id="customer-id" required value="cust-acme-101" placeholder="cust-acme-101" /></label>
+            <div class="two-col"><label>Product<select id="sku"><option value="cloud-keyboard">Cloud Keyboard — $69.99</option><option value="cloud-mouse">Cloud Mouse — $29.99</option><option value="cloud-monitor">Cloud Monitor — $249.99</option></select></label><label>Quantity<input id="quantity" type="number" min="1" max="10" value="1" required /></label></div>
+            <button class="primary submit" type="submit">Send to queue <span>→</span></button>
+          </form>
+          <p class="hint">Input is validated before the event enters the queue.</p>
+        </div>
+        <div class="panel activity"><div class="section-title"><div><p class="eyebrow">EVENT STREAM</p><h2>Live activity</h2></div><span class="live"><i></i> Live</span></div><div id="activity-list" aria-live="polite"></div></div>
+      </section>
+      <section class="panel architecture" id="architecture"><div class="section-title"><div><p class="eyebrow">SYSTEM DESIGN</p><h2>Order lifecycle</h2></div></div><div class="flow"><div><b>01</b><span>API Gateway</span><small>Validate request</small></div><em>→</em><div><b>02</b><span>SQS Queue</span><small>Buffer workload</small></div><em>→</em><div><b>03</b><span>Lambda</span><small>Process event</small></div><em>→</em><div><b>04</b><span>DynamoDB</span><small>Store order</small></div></div></section>
+    </main>
+    <dialog id="result-dialog"><button class="close" aria-label="Close">×</button><div class="success-icon">✓</div><p class="eyebrow">ORDER ACCEPTED</p><h2>It’s on its way.</h2><p id="dialog-copy">Your request has been validated and added to SQS.</p><code id="order-result"></code><button class="primary close-wide">Done</button></dialog>
+    <script src="app.js"></script>
+  </body>
+</html>

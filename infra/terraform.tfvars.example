@@ -1,0 +1,3 @@
+# Copy this file to terraform.tfvars and change values as needed.
+aws_region   = "ap-south-1"
+project_name = "cloudorder"
